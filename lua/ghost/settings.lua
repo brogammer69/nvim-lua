@@ -46,6 +46,8 @@ o.hidden = false
 
 -- show mode
 o.showmode = false
+
+-- encoding
 o.encoding = "utf-8"
 
 -- terminal colors

@@ -60,15 +60,8 @@ return require('packer').startup(function(use)
     end,
   })
 
-  --[[ use({
-    'romgrk/barbar.nvim',
-    config = function()
-      require('ghost.plugins.barbar')
-    end
-  }) ]]
-
   use {
-    'lewis6991/gitsigns.nvim',
+   'lewis6991/gitsigns.nvim',
     config = function()
       require('gitsigns').setup()
     end
