@@ -4,8 +4,8 @@ local icons = require('ghost.theme.icons')
 
 ---Common perf related flags for all the LSP servers
 local flags = {
-    allow_incremental_sync = true,
-    debounce_text_changes = 150,
+  allow_incremental_sync = true,
+  debounce_text_changes = 150,
 }
 
 
@@ -108,94 +108,94 @@ vim.diagnostic.config({
 
 -- Lua
 lsp.sumneko_lua.setup({
-    flags = flags,
-    capabilities = capabilities,
-    on_attach = on_attach,
-    settings = {
-        Lua = {
-            completion = {
-                enable = true,
-                showWord = 'Disable',
-                -- keywordSnippet = 'Disable',
-            },
-            runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                version = 'LuaJIT',
-            },
-            diagnostics = {
-                globals = { 'vim' },
-            },
-            workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = { os.getenv('VIMRUNTIME') },
-            },
-            -- Do not send telemetry data containing a randomized but unique identifier
-            telemetry = {
-                enable = false,
-            },
-        },
+  flags = flags,
+  capabilities = capabilities,
+  on_attach = on_attach,
+  settings = {
+    Lua = {
+      completion = {
+        enable = true,
+        showWord = 'Disable',
+        -- keywordSnippet = 'Disable',
+      },
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        globals = { 'vim' },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = { os.getenv('VIMRUNTIME') },
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
     },
+  },
 })
 
 -- Rust
 lsp.rust_analyzer.setup({
-    flags = flags,
-    capabilities = capabilities,
-    on_attach = on_attach,
-    settings = {
-        ['rust-analyzer'] = {
-            cargo = {
-                allFeatures = true,
-            },
-            checkOnSave = {
-                allFeatures = true,
-                command = 'clippy',
-            },
-            procMacro = {
-                ignored = {
-                    ['async-trait'] = { 'async_trait' },
-                    ['napi-derive'] = { 'napi' },
-                    ['async-recursion'] = { 'async_recursion' },
-                },
-            },
+  flags = flags,
+  capabilities = capabilities,
+  on_attach = on_attach,
+  settings = {
+    ['rust-analyzer'] = {
+      cargo = {
+        allFeatures = true,
+      },
+      checkOnSave = {
+        allFeatures = true,
+        command = 'clippy',
+      },
+      procMacro = {
+        ignored = {
+          ['async-trait'] = { 'async_trait' },
+          ['napi-derive'] = { 'napi' },
+          ['async-recursion'] = { 'async_recursion' },
         },
+      },
     },
+  },
 })
 
 -- Angular
 -- 1. install @angular/language-server globally
 -- 2. install @angular/language-service inside project as dev dep
 lsp.angularls.setup({
-    flags = flags,
-    capabilities = capabilities,
-    on_attach = function(client, buf)
-        client.server_capabilities.renameProvider = false
-        on_attach(client, buf)
-    end,
+  flags = flags,
+  capabilities = capabilities,
+  on_attach = function(client, buf)
+    client.server_capabilities.renameProvider = false
+    on_attach(client, buf)
+  end,
 })
 
 ---List of the LSP server that don't need special configuration
 local servers = {
-    'pyright', --python
-    --'zls', -- Zig
-    --'gopls', -- Golang
-    'tsserver', -- Typescript
-    'html', -- HTML
-    'cssls', -- CSS
-    'jsonls', -- Json
-    'yamlls', -- YAML
-    'emmet_ls', -- emmet-ls
-    -- 'terraformls', -- Terraform
+  'pyright', --python
+  --'zls', -- Zig
+  --'gopls', -- Golang
+  'tsserver', -- Typescript
+  'html', -- HTML
+  'cssls', -- CSS
+  'jsonls', -- Json
+  'yamlls', -- YAML
+  'emmet_ls', -- emmet-ls
+  -- 'terraformls', -- Terraform
 }
 
 local conf = {
-    flags = flags,
-    capabilities = capabilities,
-    on_attach = on_attach,
+  flags = flags,
+  capabilities = capabilities,
+  on_attach = on_attach,
 }
 
 for _, server in ipairs(servers) do
-    lsp[server].setup(conf)
+  lsp[server].setup(conf)
 end
 
 -- NOTE: Using `eslint_d` via `null-ls` bcz it is way fasterrrrrrr.

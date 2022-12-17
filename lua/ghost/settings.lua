@@ -1,4 +1,3 @@
-
 --[[
   Three types of configurations options
     vim.bo -> local to buffer

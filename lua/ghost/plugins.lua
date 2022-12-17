@@ -129,7 +129,7 @@ return require('packer').startup(function(use)
   })
 
   --Lsp config
-  use({
+--[[   use({
     'neovim/nvim-lspconfig',
     event = 'BufRead',
     config = function()
@@ -177,6 +177,30 @@ return require('packer').startup(function(use)
     { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
     { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
     { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
+  })
+ ]]
+
+  use ({
+    'VonHeikemen/lsp-zero.nvim',
+    config = function() require('ghost.plugins.lsp.lsp-zero') end,
+    requires = {
+      -- LSP Support
+      {'neovim/nvim-lspconfig'},
+      {'williamboman/mason.nvim'},
+      {'williamboman/mason-lspconfig.nvim'},
+
+      -- Autocompletion
+      {'hrsh7th/nvim-cmp'},
+      {'hrsh7th/cmp-buffer'},
+      {'hrsh7th/cmp-path'},
+      {'saadparwaiz1/cmp_luasnip'},
+      {'hrsh7th/cmp-nvim-lsp'},
+      {'hrsh7th/cmp-nvim-lua'},
+
+      -- Snippets
+      {'L3MON4D3/LuaSnip'},
+      {'rafamadriz/friendly-snippets'},
+    }
   })
 
   -- NOTE: nvim-autopairs needs to be loaded after nvim-cmp, so that <CR> would work properly

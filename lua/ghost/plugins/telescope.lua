@@ -11,7 +11,7 @@ require('telescope').setup({
     layout_config = {
       prompt_position = 'top',
     },
-    mappings = {  
+    mappings = {
       i = {
         ['<ESC>'] = actions.close,
         ['<C-j>'] = actions.move_selection_next,
@@ -35,10 +35,10 @@ require('telescope').setup({
 
 local Telescope = setmetatable({}, {
   __index = function(_, k)
-      if vim.bo.filetype == 'NvimTree' then
-        vim.cmd.wincmd('l')
-      end
-      return finders[k]
+    if vim.bo.filetype == 'NvimTree' then
+      vim.cmd.wincmd('l')
+    end
+    return finders[k]
   end,
 })
 
@@ -49,6 +49,9 @@ vim.keymap.set('n', '<C-P>', function()
     Telescope.find_files()
   end
 end)
+
+-- <leader>f = open telescope
+vim.keymap.set('n', '<leader>f', Telescope.find_files)
 
 -- Get :help at the speed of light
 vim.keymap.set('n', '<leader>H', Telescope.help_tags)
