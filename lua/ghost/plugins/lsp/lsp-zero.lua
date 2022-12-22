@@ -4,7 +4,7 @@ local luasnip = require('luasnip')
 
 lsp.preset('recommended')
 
---first disable the default key bindings
+-- First disable the default key bindings
 lsp.set_preferences({
   sign_icons = {
     error = '',
@@ -14,8 +14,8 @@ lsp.set_preferences({
   }
 })
 
---overriding the default on_attach function of lsp-zero
-lsp.on_attach(function (_, buf)
+-- Overriding the default on_attach function of lsp-zero
+lsp.on_attach(function (_, buf) -- client should be in place of _
 
   --for diagnostics to show on hover
   vim.api.nvim_create_autocmd("CursorHold", {
@@ -32,7 +32,7 @@ lsp.on_attach(function (_, buf)
     end
   })
 
-  --Creating LSP mappings
+  -- Creating LSP mappings
   local opts = { buffer = buf, remap = false }
   local map = vim.keymap.set
 
@@ -42,18 +42,18 @@ lsp.on_attach(function (_, buf)
   map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   map('i', '<C-space>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  -- map('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  -- map('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  -- map('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  -- map('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  map('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  map('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  map('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  map('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   map('n', '<leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   map('n', '<leader>c', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  -- map('v', '<leader>ca', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', opts)
+  map('v', '<leader>ca', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', opts)
   map('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  -- map('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-  -- map('n', '<leader>so', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], opts)
+  map('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+  map('n', '<leader>so', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], opts)
 end)
 
 -- Setting up custom mappings for nvim-cmp
@@ -64,14 +64,14 @@ local has_words_before = function()
 end
 
 lsp.setup_nvim_cmp({
-  mapping = {
+  mapping = cmp.mapping.preset.insert {
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
     ["<CR>"] = cmp.mapping.confirm { select = true },
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.confirm({
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = false
-        })
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
       elseif has_words_before() then
@@ -103,9 +103,8 @@ lsp.setup_nvim_cmp({
         fallback()
       end
     end, { "i", "s" }),
-
-
   },
+  completion = {completeopt = 'menu,menuone,noselect'},
 })
 
 lsp.nvim_workspace()
