@@ -34,8 +34,8 @@ o.ignorecase = true
 -- Undo and backup options
 o.backup = false
 o.writebackup = false
-g.swapfile = false
-g.undofile = false
+o.swapfile = false
+o.undofile = false
 
 -- Gutter
 o.signcolumn = "yes"

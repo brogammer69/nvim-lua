@@ -14,6 +14,41 @@ lsp.set_preferences({
   }
 })
 
+local icons = {
+  Text = '',
+  Method = '',
+  Function = '',
+  Constructor = '',
+  Field = 'ﰠ',
+  Variable = '',
+  Class = 'ﴯ',
+  Interface = '',
+  Module = '',
+  Property = 'ﰠ',
+  Unit = '塞',
+  Value = '',
+  Enum = '',
+  Keyword = '',
+  Snippet = '',
+  Color = '',
+  File = '',
+  Reference = '',
+  Folder = '',
+  EnumMember = '',
+  Constant = '',
+  Struct = 'פּ',
+  Event = '',
+  Operator = '',
+  TypeParameter = '',
+}
+
+local aliases = {
+  nvim_lsp = 'lsp',
+  luasnip = 'snippet',
+}
+
+
+
 -- Overriding the default on_attach function of lsp-zero
 lsp.on_attach(function (_, buf) -- client should be in place of _
 
@@ -64,6 +99,8 @@ local has_words_before = function()
 end
 
 lsp.setup_nvim_cmp({
+  completion = { completeopt = 'menu,menuone,noselect' },
+  preselect = cmp.PreselectMode.None,
   mapping = cmp.mapping.preset.insert {
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -71,7 +108,7 @@ lsp.setup_nvim_cmp({
     ["<CR>"] = cmp.mapping.confirm { select = true },
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert, select = true })
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
       elseif has_words_before() then
@@ -104,7 +141,16 @@ lsp.setup_nvim_cmp({
       end
     end, { "i", "s" }),
   },
-  completion = {completeopt = 'menu,menuone,noselect'},
+  formatting = {
+    format = function(entry, item)
+      -- Kind icons
+      item.kind = string.format('%s %s', icons[item.kind], item.kind)
+      -- Source
+      item.menu = string.format('[%s]', aliases[entry.source.name] or entry.source.name)
+      return item
+    end,
+  },
+
 })
 
 lsp.nvim_workspace()

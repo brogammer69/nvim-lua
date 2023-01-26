@@ -1,6 +1,8 @@
 require("gruvbox").setup({
   bold = false,
   italic = false,
+  undercurl = true,
+  underline = false
 })
 
 --set the theme
