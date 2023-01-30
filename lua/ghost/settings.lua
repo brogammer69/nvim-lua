@@ -49,6 +49,9 @@ o.showmode = false
 -- encoding
 o.encoding = "utf-8"
 
+-- keep n number of lines below the curosr
+o.scrolloff = 8
+
 -- terminal colors
 o.termguicolors = true
 g.background = 'dark'

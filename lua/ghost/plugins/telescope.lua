@@ -9,7 +9,7 @@ require('telescope').setup({
     initial_mode = 'insert',
     sorting_strategy = 'ascending',
     layout_config = {
-      prompt_position = 'top',
+      prompt_position = 'bottom',
     },
     mappings = {
       i = {

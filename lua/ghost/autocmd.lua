@@ -49,7 +49,6 @@ A.nvim_create_autocmd('FileType', {
   end,
 })
 
-
 -- Automatically close nvim-tree if it is the last buffer opened
 A.nvim_create_autocmd("BufEnter", {
   nested = true,

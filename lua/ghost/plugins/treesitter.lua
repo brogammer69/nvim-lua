@@ -114,6 +114,3 @@ require("nvim-treesitter.configs").setup({
     enable_autocmd = false,
   },
 })
-
---specific for windows
-require 'nvim-treesitter.install'.compilers = { "clang" }

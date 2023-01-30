@@ -45,16 +45,15 @@ return require('packer').startup(function(use)
   })
 
   use ({
-    "akinsho/toggleterm.nvim",
-    tag = '*',
+    'numToStr/FTerm.nvim',
     config = function()
-      require("ghost.plugins.toggleterm")
+      require('ghost.plugins.FTerm')
     end
   })
 
   use({
     'nvim-tree/nvim-tree.lua',
-    event = 'CursorHold',
+    event = 'VimEnter',
     config = function()
       require('ghost.plugins.nvim-tree')
     end,
